@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"strconv"
 	"strings"
 )
 
@@ -13,16 +14,19 @@ const stdPrompt = ">> "
 
 var prompt string
 
-func interpret(cmd string, cmds commands, inv inventory) string {
+func interpret(cmd string, cmds commands, inv *inventory) string {
 	if strings.EqualFold(cmds.chopCmd, cmd) {
 		inv.wood++
 		return "1 Wood chopped"
+	} else if strings.EqualFold(cmds.invCmd, cmd) {
+		return "There is " + strconv.Itoa(inv.wood) + " Wood in the bag"
 	}
 	return "ERROR"
 }
 
 type commands struct {
 	chopCmd string
+	invCmd  string
 }
 
 type inventory struct {
@@ -35,6 +39,7 @@ func main() {
 
 	cmds := commands{}
 	cmds.chopCmd = "chop"
+	cmds.invCmd = "eval"
 
 	inv := inventory{}
 	inv.wood = 0
@@ -43,7 +48,7 @@ func main() {
 
 	fmt.Print(prompt)
 	for scanner.Scan() && playing {
-		fmt.Println(interpret(scanner.Text(), cmds, inv))
+		fmt.Println(interpret(scanner.Text(), cmds, &inv))
 		fmt.Print(prompt)
 	}
 
