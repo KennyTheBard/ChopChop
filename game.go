@@ -3,8 +3,8 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"math/rand"
 	"os"
-	"strconv"
 	"strings"
 )
 
@@ -14,41 +14,77 @@ const stdPrompt = ">> "
 
 var prompt string
 
-func interpret(cmd string, cmds commands, inv *inventory) string {
-	if strings.EqualFold(cmds.chopCmd, cmd) {
-		inv.wood++
-		return "1 Wood chopped"
-	} else if strings.EqualFold(cmds.invCmd, cmd) {
-		return "There is " + strconv.Itoa(inv.wood) + " Wood in the bag"
+func interpret(scanner *bufio.Scanner) {
+	if handler, ok := gCommands[getInput(scanner)]; ok {
+		handler(scanner)
+	} else {
+		fmt.Println("ERROR")
 	}
-	return "ERROR"
 }
 
-type commands struct {
-	chopCmd string
-	invCmd  string
+func nextWord(word string) string {
+	if words, ok := gDictionary[word]; ok {
+		return words[rand.Intn(len(words))]
+	}
+	return ""
 }
 
-type inventory struct {
-	wood int
+func getInput(scanner *bufio.Scanner) string {
+	return strings.TrimSpace(strings.ToLower(scanner.Text()))
 }
+
+func requestInput(target string) {
+	fmt.Println("Type '" + target + "'")
+	fmt.Print(prompt)
+}
+
+func chopWoodHandler(scanner *bufio.Scanner) {
+	word := "wood"
+	target := nextWord(word)
+	requestInput(target)
+
+	for scanner.Scan() {
+		if strings.EqualFold(target, getInput(scanner)) {
+			gInventory["wood"]++
+			fmt.Println("Chopped 1 Wood!")
+		} else if strings.EqualFold("stop", getInput(scanner)) {
+			break
+		}
+		target = nextWord(word)
+		requestInput(target)
+	}
+}
+
+type commands map[string]func(*bufio.Scanner)
+
+var gCommands commands
+
+type dictionary map[string][]string
+
+var gDictionary dictionary
+
+type inventory map[string]int
+
+var gInventory inventory
 
 func main() {
 	playing = true
 	prompt = stdPrompt
 
-	cmds := commands{}
-	cmds.chopCmd = "chop"
-	cmds.invCmd = "eval"
+	gCommands = make(commands)
+	gCommands["wood"] = chopWoodHandler
 
-	inv := inventory{}
-	inv.wood = 0
+	gDictionary = make(dictionary)
+	gDictionary["wood"] = []string{"chop", "swing"}
+
+	gInventory = make(inventory)
+	gInventory["wood"] = 0
 
 	scanner := bufio.NewScanner(os.Stdin)
 
 	fmt.Print(prompt)
 	for scanner.Scan() && playing {
-		fmt.Println(interpret(scanner.Text(), cmds, &inv))
+		interpret(scanner)
 		fmt.Print(prompt)
 	}
 
