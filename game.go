@@ -39,6 +39,14 @@ func requestInput(target string) {
 	fmt.Print(prompt)
 }
 
+func addItem(item string) {
+	if _, ok := gInventory[item]; ok {
+		gInventory[item]++
+	} else {
+		gInventory[item] = 1
+	}
+}
+
 func chopWoodHandler(scanner *bufio.Scanner) {
 	word := "wood"
 	target := nextWord(word)
@@ -46,7 +54,7 @@ func chopWoodHandler(scanner *bufio.Scanner) {
 
 	for scanner.Scan() {
 		if strings.EqualFold(target, getInput(scanner)) {
-			gInventory["wood"]++
+			addItem("wood")
 			fmt.Println("Chopped 1 Wood!")
 		} else if strings.EqualFold("stop", getInput(scanner)) {
 			break
@@ -69,7 +77,7 @@ func inventoryHandler(scanner *bufio.Scanner) {
 				fmt.Println("None")
 			}
 		}
-
+		fmt.Print(prompt)
 	}
 
 }
@@ -98,7 +106,6 @@ func main() {
 	gDictionary["wood"] = []string{"chop", "swing"}
 
 	gInventory = make(inventory)
-	gInventory["wood"] = 0
 
 	scanner := bufio.NewScanner(os.Stdin)
 
