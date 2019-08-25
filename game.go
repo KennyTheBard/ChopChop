@@ -11,21 +11,22 @@ import (
 	context "./context"
 )
 
-func chopWoodHandler(scanner *bufio.Scanner) {
-	word := "wood"
-	target := gContext.GetDictionary().NextWord(word)
+func HandlerFactory(task string) func(*bufio.Scanner) {
+	return func(scanner *bufio.Scanner) {
+		target := gContext.GetDictionary().NextWord(task)
 
-	cli.Prompt()
-	for scanner.Scan() {
-		if strings.EqualFold(target, cli.GetInput(scanner)) {
-			gContext.GetInventory().AddItem("wood")
-			fmt.Println("Chopped 1 Wood!")
-		} else if strings.EqualFold("stop", cli.GetInput(scanner)) {
-			break
-		}
-
-		target = gContext.GetDictionary().NextWord(word)
 		cli.Prompt()
+		for scanner.Scan() {
+			if strings.EqualFold(target, cli.GetInput(scanner)) {
+				gContext.GetInventory().AddItem(task)
+				fmt.Println("+1 " + task)
+			} else if strings.EqualFold("stop", cli.GetInput(scanner)) {
+				break
+			}
+
+			target = gContext.GetDictionary().NextWord(task)
+			cli.Prompt()
+		}
 	}
 }
 
@@ -52,9 +53,14 @@ var gContext context.GameContext
 
 func main() {
 	gContext.InitContext()
-	gContext.GetCommands()["wood"] = chopWoodHandler
+	gContext.GetCommands()["wood"] = HandlerFactory("wood")
+	gContext.GetCommands()["pelts"] = HandlerFactory("pelts")
+	gContext.GetCommands()["ore"] = HandlerFactory("ore")
 	gContext.GetCommands()["inventory"] = inventoryHandler
+
 	gContext.GetDictionary()["wood"] = []string{"chop", "swing"}
+	gContext.GetDictionary()["pelts"] = []string{"track", "shoot"}
+	gContext.GetDictionary()["ore"] = []string{"dig", "smash", "drill"}
 
 	scanner := bufio.NewScanner(os.Stdin)
 
