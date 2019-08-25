@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"math/rand"
 	"os"
+	"strconv"
 	"strings"
 )
 
@@ -55,6 +56,24 @@ func chopWoodHandler(scanner *bufio.Scanner) {
 	}
 }
 
+func inventoryHandler(scanner *bufio.Scanner) {
+	fmt.Print("What are you looking for in your inventory?\n>> ")
+
+	for scanner.Scan() {
+		if strings.EqualFold("stop", getInput(scanner)) {
+			break
+		} else {
+			if item, ok := gInventory[getInput(scanner)]; ok {
+				fmt.Println(getInput(scanner) + ": " + strconv.Itoa(item))
+			} else {
+				fmt.Println("None")
+			}
+		}
+
+	}
+
+}
+
 type commands map[string]func(*bufio.Scanner)
 
 var gCommands commands
@@ -73,6 +92,7 @@ func main() {
 
 	gCommands = make(commands)
 	gCommands["wood"] = chopWoodHandler
+	gCommands["inventory"] = inventoryHandler
 
 	gDictionary = make(dictionary)
 	gDictionary["wood"] = []string{"chop", "swing"}
