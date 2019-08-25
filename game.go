@@ -16,7 +16,7 @@ func Prompt() {
 }
 
 func interpret(scanner *bufio.Scanner) {
-	if handler, ok := gCommands[getInput(scanner)]; ok {
+	if handler, ok := context.gCommands[getInput(scanner)]; ok {
 		handler(scanner)
 	} else {
 		fmt.Println("ERROR")
@@ -24,7 +24,7 @@ func interpret(scanner *bufio.Scanner) {
 }
 
 func nextWord(word string) string {
-	if words, ok := gDictionary[word]; ok {
+	if words, ok := context.gDictionary[word]; ok {
 		return words[rand.Intn(len(words))]
 	}
 	return ""
@@ -40,10 +40,10 @@ func requestInput(target string) {
 }
 
 func addItem(item string) {
-	if _, ok := gInventory[item]; ok {
-		gInventory[item]++
+	if _, ok := context.gInventory[item]; ok {
+		context.gInventory[item]++
 	} else {
-		gInventory[item] = 1
+		context.gInventory[item] = 1
 	}
 }
 
@@ -71,7 +71,7 @@ func inventoryHandler(scanner *bufio.Scanner) {
 		if strings.EqualFold("stop", getInput(scanner)) {
 			break
 		} else {
-			if item, ok := gInventory[getInput(scanner)]; ok {
+			if item, ok := context.gInventory[getInput(scanner)]; ok {
 				fmt.Println(getInput(scanner) + ": " + strconv.Itoa(item))
 			} else {
 				fmt.Println("None")
@@ -82,29 +82,33 @@ func inventoryHandler(scanner *bufio.Scanner) {
 
 }
 
-type commands map[string]func(*bufio.Scanner)
+type Commands map[string]func(*bufio.Scanner)
 
-var gCommands commands
+type Dictionary map[string][]string
 
-type dictionary map[string][]string
+type Inventory map[string]int
 
-var gDictionary dictionary
+type GameContext struct {
+	gCommands   Commands
+	gDictionary Dictionary
+	gInventory  Inventory
+}
 
-type inventory map[string]int
+var context GameContext
 
-var gInventory inventory
+func (context *GameContext) InitContext() {
+	context.gCommands = make(Commands)
+	context.gDictionary = make(Dictionary)
+	context.gInventory = make(Inventory)
+}
 
 func main() {
 	playing = true
 
-	gCommands = make(commands)
-	gCommands["wood"] = chopWoodHandler
-	gCommands["inventory"] = inventoryHandler
-
-	gDictionary = make(dictionary)
-	gDictionary["wood"] = []string{"chop", "swing"}
-
-	gInventory = make(inventory)
+	context.InitContext()
+	context.gCommands["wood"] = chopWoodHandler
+	context.gCommands["inventory"] = inventoryHandler
+	context.gDictionary["wood"] = []string{"chop", "swing"}
 
 	scanner := bufio.NewScanner(os.Stdin)
 
