@@ -11,9 +11,9 @@ import (
 
 var playing bool
 
-const stdPrompt = ">> "
-
-var prompt string
+func Prompt() {
+	fmt.Print(">> ")
+}
 
 func interpret(scanner *bufio.Scanner) {
 	if handler, ok := gCommands[getInput(scanner)]; ok {
@@ -36,7 +36,7 @@ func getInput(scanner *bufio.Scanner) string {
 
 func requestInput(target string) {
 	fmt.Println("Type '" + target + "'")
-	fmt.Print(prompt)
+	Prompt()
 }
 
 func addItem(item string) {
@@ -77,7 +77,7 @@ func inventoryHandler(scanner *bufio.Scanner) {
 				fmt.Println("None")
 			}
 		}
-		fmt.Print(prompt)
+		Prompt()
 	}
 
 }
@@ -96,7 +96,6 @@ var gInventory inventory
 
 func main() {
 	playing = true
-	prompt = stdPrompt
 
 	gCommands = make(commands)
 	gCommands["wood"] = chopWoodHandler
@@ -109,10 +108,10 @@ func main() {
 
 	scanner := bufio.NewScanner(os.Stdin)
 
-	fmt.Print(prompt)
+	Prompt()
 	for scanner.Scan() && playing {
 		interpret(scanner)
-		fmt.Print(prompt)
+		Prompt()
 	}
 
 }
