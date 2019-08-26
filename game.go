@@ -9,9 +9,9 @@ import (
 	handle "./handle"
 )
 
-var gContext context.GameContext
-
 func main() {
+	var gContext context.GameContext
+
 	gContext.InitContext()
 	gContext.GetCommands()["wood"] = handle.TaskFactory("wood", gContext)
 	gContext.GetCommands()["pelts"] = handle.TaskFactory("pelts", gContext)
