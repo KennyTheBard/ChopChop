@@ -9,20 +9,22 @@ import (
 	context "../context"
 )
 
-func TaskFactory(task string, gContext context.GameContext) func(*bufio.Scanner) {
+var GlobalContext context.GameContext
+
+func TaskFactory(task string) func(*bufio.Scanner) {
 	return func(scanner *bufio.Scanner) {
-		target := gContext.GetDictionary().NextWord(task)
+		target := GlobalContext.GetDictionary().NextWord(task)
 
 		cli.Prompt()
 		for scanner.Scan() {
 			if strings.EqualFold(target, cli.GetInput(scanner)) {
-				gContext.GetInventory().AddItem(task)
+				GlobalContext.GetInventory().AddItem(task)
 				fmt.Println("+1 " + task)
 			} else if strings.EqualFold("stop", cli.GetInput(scanner)) {
 				break
 			}
 
-			target = gContext.GetDictionary().NextWord(task)
+			target = GlobalContext.GetDictionary().NextWord(task)
 			cli.Prompt()
 		}
 	}
