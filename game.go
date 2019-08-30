@@ -5,28 +5,26 @@ import (
 	"os"
 
 	cli "./cli"
-	context "./context"
 	handle "./handle"
 )
 
 func main() {
-	var gContext context.GameContext
 
-	gContext.InitContext()
-	gContext.GetCommands()["wood"] = handle.TaskFactory("wood", gContext)
-	gContext.GetCommands()["pelts"] = handle.TaskFactory("pelts", gContext)
-	gContext.GetCommands()["ore"] = handle.TaskFactory("ore", gContext)
-	gContext.GetCommands()["inventory"] = handle.InventoryHandler(gContext)
+	handle.GlobalContext.InitContext()
+	handle.GlobalContext.GetCommands()["wood"] = handle.TaskFactory("wood")
+	handle.GlobalContext.GetCommands()["pelts"] = handle.TaskFactory("pelts")
+	handle.GlobalContext.GetCommands()["ore"] = handle.TaskFactory("ore")
+	handle.GlobalContext.GetCommands()["inventory"] = handle.InventoryHandler()
 
-	gContext.GetDictionary()["wood"] = []string{"chop", "swing"}
-	gContext.GetDictionary()["pelts"] = []string{"track", "shoot"}
-	gContext.GetDictionary()["ore"] = []string{"dig", "smash", "drill"}
+	handle.GlobalContext.GetDictionary()["wood"] = []string{"chop", "swing"}
+	handle.GlobalContext.GetDictionary()["pelts"] = []string{"track", "shoot"}
+	handle.GlobalContext.GetDictionary()["ore"] = []string{"dig", "smash", "drill"}
 
 	scanner := bufio.NewScanner(os.Stdin)
 
 	cli.Prompt()
 	for scanner.Scan() {
-		gContext.GetCommands().Interpret(scanner)
+		handle.GlobalContext.GetCommands().Interpret(scanner)
 		cli.Prompt()
 	}
 
