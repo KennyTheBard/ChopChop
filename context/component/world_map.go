@@ -2,8 +2,8 @@ package component
 
 type WorldMap map[string]Location
 
-func (worldMap WorldMap) AddLocation(locationName string, location Location) {
-	worldMap[locationName] = location
+func (worldMap WorldMap) AddLocation(location Location) {
+	worldMap[location.GetName()] = location
 }
 
 func (worldMap WorldMap) GetLocation(locationName string) Location {

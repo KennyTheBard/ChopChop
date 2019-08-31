@@ -21,9 +21,9 @@ func TravelHandle(args []string) {
 				""))
 
 		} else {
-			if wMap.GetLocation(curr).GetAdjacentLocations().HasAdjacentLocation(arg) {
+			if wMap.GetLocation(curr).HasAdjacentLocation(arg) {
 				context.GlobalContext.SetCurrentLocation(arg)
-				fmt.Println("You are in " + arg + " now")
+				fmt.Println("You are now in " + arg)
 
 			} else {
 				fmt.Println("ERROR [" + arg + "]: No such location in vicinity!")

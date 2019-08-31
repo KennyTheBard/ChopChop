@@ -20,10 +20,14 @@ func BuildResponse(args []string, pre, separator, post string) string {
 	builder.Grow(len(pre))
 	builder.WriteString(pre)
 
-	for _, arg := range args {
-		builder.Grow(len(arg) + len(separator))
+	for i, arg := range args {
+		builder.Grow(len(arg))
 		builder.WriteString(arg)
-		builder.WriteString(separator)
+
+		if i < len(args)-1 {
+			builder.Grow(len(separator))
+			builder.WriteString(separator)
+		}
 	}
 
 	builder.Grow(len(post))

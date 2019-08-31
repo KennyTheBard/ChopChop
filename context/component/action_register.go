@@ -11,6 +11,6 @@ func (register ActionRegister) HasAction(action string) bool {
 	return ok
 }
 
-func (register ActionRegister) AddAction(actionName string, action Action) {
-	register[actionName] = action
+func (register ActionRegister) AddAction(action Action) {
+	register[action.GetName()] = action
 }
