@@ -7,24 +7,24 @@ import (
 
 	cli "../cli"
 	context "../context"
+	component "../context/component"
 )
 
-var GlobalContext context.GameContext
-
-func TaskFactory(task string) func(*bufio.Scanner) {
+func TaskFactory(task component.Action) func(*bufio.Scanner) {
 	return func(scanner *bufio.Scanner) {
-		target := GlobalContext.GetDictionary().NextWord(task)
+		target := task.NextWord()
 
 		cli.Prompt()
 		for scanner.Scan() {
 			if strings.EqualFold(target, cli.GetInput(scanner)) {
-				GlobalContext.GetInventory().AddItem(task)
-				fmt.Println("+1 " + task)
+				reward := task.GetReward()
+				context.GlobalContext.GetInventory().AddItem(reward)
+				fmt.Println("+1 " + reward)
 			} else if strings.EqualFold("stop", cli.GetInput(scanner)) {
 				break
 			}
 
-			target = GlobalContext.GetDictionary().NextWord(task)
+			target = task.NextWord()
 			cli.Prompt()
 		}
 	}
