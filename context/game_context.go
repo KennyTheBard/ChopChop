@@ -1,25 +1,58 @@
 package context
 
+import (
+	"bufio"
+	"fmt"
+	"os"
+
+	component "./component"
+)
+
 type GameContext struct {
-	gCommands   Commands
-	gDictionary Dictionary
-	gInventory  Inventory
+	inventory       component.Inventory
+	actionRegister  component.ActionRegister
+	worldMap        component.WorldMap
+	scanner         *bufio.Scanner
+	currentLocation string
 }
+
+var GlobalContext GameContext
 
 func (context *GameContext) InitContext() {
-	context.gCommands = make(Commands)
-	context.gDictionary = make(Dictionary)
-	context.gInventory = make(Inventory)
+	context.inventory = make(component.Inventory)
+	context.worldMap = make(component.WorldMap)
+	context.actionRegister = make(component.ActionRegister)
+
+	context.scanner = bufio.NewScanner(os.Stdin)
 }
 
-func (context GameContext) GetCommands() Commands {
-	return context.gCommands
+func (context GameContext) GetInventory() component.Inventory {
+	return context.inventory
 }
 
-func (context GameContext) GetDictionary() Dictionary {
-	return context.gDictionary
+func (context GameContext) GetActionRegister() component.ActionRegister {
+	return context.actionRegister
 }
 
-func (context GameContext) GetInventory() Inventory {
-	return context.gInventory
+func (context GameContext) GetWorldMap() component.WorldMap {
+	return context.worldMap
+}
+
+func (context GameContext) GetScanner() *bufio.Scanner {
+	return context.scanner
+}
+
+func (context GameContext) GetCurrentLocation() string {
+	return context.currentLocation
+}
+
+func (context *GameContext) SetCurrentLocation(location string) {
+	context.currentLocation = location
+}
+
+func (context GameContext) Print() {
+	fmt.Println(context.inventory)
+	fmt.Println(context.actionRegister)
+	fmt.Println(context.worldMap)
+	fmt.Println(context.currentLocation)
 }
