@@ -7,10 +7,18 @@ import (
 	context ".."
 )
 
-func InventoryHandle(args []string) {
-	for _, arg := range args {
-		inv := context.GlobalContext.GetInventory()
+func InventoryHandle() {
+	inv := context.GlobalContext.GetInventory()
+	reader := context.GlobalContext.GetReader()
 
-		fmt.Println(" " + arg + ": " + strconv.Itoa(inv.GetItem(arg)))
+	for {
+		if reader.IsInputEqual("stop") {
+			reader.Next()
+			break
+
+		} else {
+			item := reader.GetInput()
+			fmt.Println(" " + item + ": " + strconv.Itoa(inv.GetItem(item)))
+		}
 	}
 }

@@ -1,9 +1,8 @@
 package main
 
 import (
-	"strings"
+	"fmt"
 
-	cli "./cli"
 	context "./context"
 	component "./context/component"
 	handle "./context/handle"
@@ -26,6 +25,7 @@ func main() {
 	handleRegister.AddHandle("do", handle.ActionHandle)
 	handleRegister.AddHandle("inv", handle.InventoryHandle)
 	handleRegister.AddHandle("help", handle.HelpHandle)
+	context.GlobalContext.SetHandleRegister(handleRegister)
 
 	worldMap.AddLocation(component.NewLocation("forrest", []string{"cave", "river"}, []string{"chop", "hunt"}))
 	worldMap.AddLocation(component.NewLocation("river", []string{"forrest"}, []string{"fish"}))
@@ -33,20 +33,13 @@ func main() {
 
 	context.GlobalContext.SetCurrentLocation("forrest")
 
-	scanner := context.GlobalContext.GetScanner()
-	for {
-		cli.Prompt()
-		scanner.Scan()
+	fmt.Println(handleRegister)
+	fmt.Println(context.GlobalContext.GetHandleRegister())
+	fmt.Println(actionRegister)
+	fmt.Println(context.GlobalContext.GetActionRegister())
+	fmt.Println(worldMap)
+	fmt.Println(context.GlobalContext.GetWorldMap())
 
-		if cli.GetInput(scanner) == "exit" {
-			break
-
-		} else {
-			args := strings.Split(cli.GetInput(scanner), " ")
-			reminder := args[1:]
-
-			handleRegister.GetHandle(args[0])(reminder)
-		}
-	}
+	handle.MainHandle()
 
 }

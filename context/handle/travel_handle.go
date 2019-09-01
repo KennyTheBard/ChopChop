@@ -2,33 +2,32 @@ package handle
 
 import (
 	"fmt"
-	"strings"
 
 	context ".."
 	cli "../../cli"
 )
 
-func TravelHandle(args []string) {
-	for _, arg := range args {
-		curr := context.GlobalContext.GetCurrentLocation()
-		wMap := context.GlobalContext.GetWorldMap()
+func TravelHandle() {
+	curr := context.GlobalContext.GetCurrentLocation()
+	wMap := context.GlobalContext.GetWorldMap()
+	reader := context.GlobalContext.GetReader()
 
-		if strings.EqualFold(arg, "where") {
+	for {
+		if reader.IsInputEqual("where") {
 			fmt.Println(cli.BuildResponse(
 				wMap.GetLocation(curr).GetAdjacentLocations(),
 				" * ",
 				"\n * ",
 				""))
 
-		} else {
-			if wMap.GetLocation(curr).HasAdjacentLocation(arg) {
-				context.GlobalContext.SetCurrentLocation(arg)
-				fmt.Println("You are now in " + arg)
+		} else if arg := reader.GetInput(); wMap.GetLocation(curr).HasAdjacentLocation(arg) {
+			context.GlobalContext.SetCurrentLocation(arg)
+			fmt.Println("You are now in " + arg)
 
-			} else {
-				fmt.Println("ERROR [" + arg + "]: No such location in vicinity!")
-				break
-			}
+		} else {
+			fmt.Println("ERROR [" + arg + "]: No such location in vicinity!")
+			break
 		}
+
 	}
 }

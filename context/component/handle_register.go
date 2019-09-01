@@ -1,6 +1,6 @@
 package component
 
-type Handle func([]string)
+type Handle func()
 
 type HandleRegister struct {
 	register map[string]Handle

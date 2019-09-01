@@ -1,17 +1,12 @@
 package cli
 
 import (
-	"bufio"
 	"fmt"
 	"strings"
 )
 
 func Prompt() {
 	fmt.Print(">> ")
-}
-
-func GetInput(scanner *bufio.Scanner) string {
-	return strings.TrimSpace(strings.ToLower(scanner.Text()))
 }
 
 func BuildResponse(args []string, pre, separator, post string) string {

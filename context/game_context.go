@@ -1,10 +1,9 @@
 package context
 
 import (
-	"bufio"
 	"fmt"
-	"os"
 
+	cli "../cli"
 	component "./component"
 )
 
@@ -13,7 +12,7 @@ type GameContext struct {
 	actionRegister  component.ActionRegister
 	handleRegister  component.HandleRegister
 	worldMap        component.WorldMap
-	scanner         *bufio.Scanner
+	reader          cli.Reader
 	currentLocation string
 }
 
@@ -24,7 +23,7 @@ func (context *GameContext) InitContext() {
 	context.actionRegister = make(component.ActionRegister)
 	context.worldMap = make(component.WorldMap)
 
-	context.scanner = bufio.NewScanner(os.Stdin)
+	context.reader.Init()
 }
 
 func (context GameContext) GetInventory() component.Inventory {
@@ -39,12 +38,16 @@ func (context GameContext) GetHandleRegister() component.HandleRegister {
 	return context.handleRegister
 }
 
+func (context *GameContext) SetHandleRegister(register component.HandleRegister) {
+	context.handleRegister = register
+}
+
 func (context GameContext) GetWorldMap() component.WorldMap {
 	return context.worldMap
 }
 
-func (context GameContext) GetScanner() *bufio.Scanner {
-	return context.scanner
+func (context GameContext) GetReader() cli.Reader {
+	return context.reader
 }
 
 func (context GameContext) GetCurrentLocation() string {

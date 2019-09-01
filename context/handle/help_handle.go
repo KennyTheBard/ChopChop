@@ -4,6 +4,6 @@ import (
 	"fmt"
 )
 
-func HelpHandle(args []string) {
+func HelpHandle() {
 	fmt.Println("This is Woodshack help menu. If you wish to learn more about anything, use it.")
 }
