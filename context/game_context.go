@@ -11,6 +11,7 @@ import (
 type GameContext struct {
 	inventory       component.Inventory
 	actionRegister  component.ActionRegister
+	handleRegister  component.HandleRegister
 	worldMap        component.WorldMap
 	scanner         *bufio.Scanner
 	currentLocation string
@@ -20,8 +21,8 @@ var GlobalContext GameContext
 
 func (context *GameContext) InitContext() {
 	context.inventory = make(component.Inventory)
-	context.worldMap = make(component.WorldMap)
 	context.actionRegister = make(component.ActionRegister)
+	context.worldMap = make(component.WorldMap)
 
 	context.scanner = bufio.NewScanner(os.Stdin)
 }
@@ -32,6 +33,10 @@ func (context GameContext) GetInventory() component.Inventory {
 
 func (context GameContext) GetActionRegister() component.ActionRegister {
 	return context.actionRegister
+}
+
+func (context GameContext) GetHandleRegister() component.HandleRegister {
+	return context.handleRegister
 }
 
 func (context GameContext) GetWorldMap() component.WorldMap {

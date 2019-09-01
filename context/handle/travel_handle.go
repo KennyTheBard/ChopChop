@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"strings"
 
-	cli "../cli"
-	context "../context"
+	context ".."
+	cli "../../cli"
 )
 
 func TravelHandle(args []string) {

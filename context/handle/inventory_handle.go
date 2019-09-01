@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strconv"
 
-	context "../context"
+	context ".."
 )
 
 func InventoryHandle(args []string) {

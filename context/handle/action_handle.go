@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"strings"
 
-	cli "../cli"
-	context "../context"
-	component "../context/component"
+	context ".."
+	cli "../../cli"
+	component "../component"
 )
 
 func ActionHandle(args []string) {
