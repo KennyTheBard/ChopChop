@@ -1,8 +1,6 @@
 package main
 
 import (
-	"fmt"
-
 	context "./context"
 	component "./context/component"
 	handle "./context/handle"
@@ -33,13 +31,5 @@ func main() {
 
 	context.GlobalContext.SetCurrentLocation("forrest")
 
-	fmt.Println(handleRegister)
-	fmt.Println(context.GlobalContext.GetHandleRegister())
-	fmt.Println(actionRegister)
-	fmt.Println(context.GlobalContext.GetActionRegister())
-	fmt.Println(worldMap)
-	fmt.Println(context.GlobalContext.GetWorldMap())
-
 	handle.MainHandle()
-
 }

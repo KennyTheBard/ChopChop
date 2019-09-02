@@ -13,6 +13,7 @@ func ActionHandle() {
 	wMap := context.GlobalContext.GetWorldMap()
 	reg := context.GlobalContext.GetActionRegister()
 	reader := context.GlobalContext.GetReader()
+	reader.SetPrompt("action")
 
 	for {
 		if reader.IsInputEqual("what") {
@@ -21,6 +22,10 @@ func ActionHandle() {
 				" * ",
 				"\n * ",
 				""))
+
+		} else if reader.IsInputEqual("back") {
+			reader.Next()
+			break
 
 		} else if arg := reader.GetInput(); wMap.GetLocation(curr).HasAvailableAction(arg) {
 			fmt.Println("You start to " + arg)

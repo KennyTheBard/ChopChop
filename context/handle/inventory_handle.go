@@ -10,9 +10,10 @@ import (
 func InventoryHandle() {
 	inv := context.GlobalContext.GetInventory()
 	reader := context.GlobalContext.GetReader()
+	reader.SetPrompt("inventory")
 
 	for {
-		if reader.IsInputEqual("stop") {
+		if reader.IsInputEqual("back") {
 			reader.Next()
 			break
 

@@ -11,6 +11,7 @@ func TravelHandle() {
 	curr := context.GlobalContext.GetCurrentLocation()
 	wMap := context.GlobalContext.GetWorldMap()
 	reader := context.GlobalContext.GetReader()
+	reader.SetPrompt("travel")
 
 	for {
 		if reader.IsInputEqual("where") {
@@ -19,6 +20,10 @@ func TravelHandle() {
 				" * ",
 				"\n * ",
 				""))
+
+		} else if reader.IsInputEqual("back") {
+			reader.Next()
+			break
 
 		} else if arg := reader.GetInput(); wMap.GetLocation(curr).HasAdjacentLocation(arg) {
 			context.GlobalContext.SetCurrentLocation(arg)

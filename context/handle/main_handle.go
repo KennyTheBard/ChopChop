@@ -5,8 +5,9 @@ import (
 )
 
 func MainHandle() {
-	reader := context.GlobalContext.GetReader()
 	handleRegister := context.GlobalContext.GetHandleRegister()
+	reader := context.GlobalContext.GetReader()
+	reader.SetPrompt("main")
 
 	for {
 		if reader.IsInputEqual("exit") {

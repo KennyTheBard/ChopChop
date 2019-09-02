@@ -5,8 +5,8 @@ import (
 	"strings"
 )
 
-func Prompt() {
-	fmt.Print(">> ")
+func Prompt(handle string) {
+	fmt.Print(" [" + handle + "] >> ")
 }
 
 func BuildResponse(args []string, pre, separator, post string) string {
