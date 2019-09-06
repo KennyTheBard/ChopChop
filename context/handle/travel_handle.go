@@ -11,7 +11,7 @@ func TravelHandle() {
 	curr := context.GlobalContext.GetCurrentLocation()
 	wMap := context.GlobalContext.GetWorldMap()
 	reader := context.GlobalContext.GetReader()
-	reader.SetPrompt("travel")
+	cli.SetPrompt("travel")
 
 	for {
 		if reader.IsInputEqual("where") {
@@ -20,10 +20,8 @@ func TravelHandle() {
 				"Close locations are:\n * ",
 				"\n * ",
 				""))
-			reader.Next()
 
 		} else if reader.IsInputEqual("back") {
-			reader.Next()
 			break
 
 		} else if arg := reader.GetInput(); wMap.GetLocation(curr).HasAdjacentLocation(arg) {
@@ -32,8 +30,6 @@ func TravelHandle() {
 
 		} else {
 			fmt.Println("ERROR [" + arg + "]: No such location in vicinity!")
-			break
 		}
-
 	}
 }

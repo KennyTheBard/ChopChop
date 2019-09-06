@@ -2,12 +2,13 @@ package handle
 
 import (
 	context ".."
+	cli "../../cli"
 )
 
 func MainHandle() {
 	handleRegister := context.GlobalContext.GetHandleRegister()
 	reader := context.GlobalContext.GetReader()
-	reader.SetPrompt("main")
+	cli.SetPrompt("main")
 
 	for {
 		if reader.IsInputEqual("exit") {

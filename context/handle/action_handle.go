@@ -13,7 +13,7 @@ func ActionHandle() {
 	wMap := context.GlobalContext.GetWorldMap()
 	reg := context.GlobalContext.GetActionRegister()
 	reader := context.GlobalContext.GetReader()
-	reader.SetPrompt("action")
+	cli.SetPrompt("action")
 
 	for {
 		if reader.IsInputEqual("what") {
@@ -24,7 +24,6 @@ func ActionHandle() {
 				""))
 
 		} else if reader.IsInputEqual("back") {
-			reader.Next()
 			break
 
 		} else if arg := reader.GetInput(); wMap.GetLocation(curr).HasAvailableAction(arg) {
@@ -33,7 +32,6 @@ func ActionHandle() {
 
 		} else {
 			fmt.Println("ERROR [" + arg + "]: This action cannot be done here!")
-			break
 		}
 	}
 }
@@ -48,11 +46,9 @@ func actionFactory(action component.Action) {
 		fmt.Println("Type '" + target + "'")
 
 		if reader.IsInputEqual("stop") {
-			reader.Next()
 			break
 
 		} else if reader.IsInputEqual(target) {
-			reader.Next()
 			inventory.AddItem(reward)
 			fmt.Println(" +1 " + reward)
 		}

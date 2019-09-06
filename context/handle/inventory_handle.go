@@ -5,16 +5,16 @@ import (
 	"strconv"
 
 	context ".."
+	cli "../../cli"
 )
 
 func InventoryHandle() {
 	inv := context.GlobalContext.GetInventory()
 	reader := context.GlobalContext.GetReader()
-	reader.SetPrompt("inventory")
+	cli.SetPrompt("inventory")
 
 	for {
 		if reader.IsInputEqual("back") {
-			reader.Next()
 			break
 
 		} else {

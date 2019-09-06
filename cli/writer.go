@@ -5,8 +5,14 @@ import (
 	"strings"
 )
 
-func Prompt(handle string) {
-	fmt.Print(" [" + handle + "] >> ")
+var prompt string
+
+func Prompt() {
+	fmt.Print(" [" + prompt + "] >> ")
+}
+
+func SetPrompt(newPrompt string) {
+	prompt = strings.ToUpper(newPrompt)
 }
 
 func BuildResponse(args []string, pre, separator, post string) string {
