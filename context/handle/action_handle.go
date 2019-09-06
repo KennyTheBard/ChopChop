@@ -19,7 +19,7 @@ func ActionHandle() {
 		if reader.IsInputEqual("what") {
 			fmt.Println(cli.BuildResponse(
 				wMap.GetLocation(curr).GetAvailableActions(),
-				" * ",
+				"Available actions are:\n * ",
 				"\n * ",
 				""))
 
