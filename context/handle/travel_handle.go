@@ -17,9 +17,10 @@ func TravelHandle() {
 		if reader.IsInputEqual("where") {
 			fmt.Println(cli.BuildResponse(
 				wMap.GetLocation(curr).GetAdjacentLocations(),
-				" * ",
+				"Locations are:\n * ",
 				"\n * ",
 				""))
+			reader.Next()
 
 		} else if reader.IsInputEqual("back") {
 			reader.Next()

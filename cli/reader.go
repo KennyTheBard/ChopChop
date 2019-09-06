@@ -21,36 +21,50 @@ func (r *Reader) Init() {
 	r.prompt = ""
 }
 
-func (r Reader) GetInput() string {
+func (r *Reader) GetInput() string {
 	r.Reload()
 
 	prev := r.Next()
-	fmt.Println(prev, r.commands, r.iter)
 	return r.commands[prev]
 }
 
-func (r Reader) IsInputEqual(cmd string) bool {
+func (r *Reader) IsInputEqual(cmd string) bool {
 	r.Reload()
 
-	fmt.Println(cmd, r.commands, r.iter)
-	return r.commands[r.iter] == strings.ToLower(cmd)
+	if r.commands[r.iter] == strings.ToLower(cmd) {
+		r.iter++
+		return true
+	} else {
+		return false
+	}
 }
 
 func (r *Reader) Next() int {
 	r.iter++
+	r.Reload()
 	return r.iter - 1
+}
+
+func (r *Reader) Clear() {
+	r.iter = len(r.commands)
 }
 
 func (r *Reader) Reload() {
 	if r.iter >= len(r.commands) {
-		Prompt(r.prompt)
-		r.scanner.Scan()
+		for {
+			if r.scanner.Scan() {
+				break
+			}
+		}
 		r.commands = strings.Fields(strings.TrimSpace(strings.ToLower(r.scanner.Text())))
 		r.iter = 0
 	}
 }
 
 func (r *Reader) SetPrompt(prompt string) {
-	fmt.Println(prompt, r.commands, r.iter)
 	r.prompt = strings.ToUpper(prompt)
+}
+
+func (r *Reader) Print(msg string) {
+	fmt.Println(msg+" : ", r.commands, r.iter, r.prompt)
 }
