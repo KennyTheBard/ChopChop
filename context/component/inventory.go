@@ -1,5 +1,7 @@
 package component
 
+import "strconv"
+
 type Inventory map[string]int
 
 func (inventory Inventory) AddItem(item string) {
@@ -21,4 +23,16 @@ func (inventory Inventory) GetItem(item string) int {
 func (inventory Inventory) HasItem(item string) bool {
 	units, ok := inventory[item]
 	return ok && units > 0
+}
+
+func (inventory Inventory) GetAllItems() []string {
+	arr := make([]string, len(inventory))
+	counter := 0
+
+	for key, value := range inventory {
+		arr[counter] = " " + key + ": " + strconv.Itoa(value)
+		counter++
+	}
+
+	return arr
 }
