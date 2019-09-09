@@ -13,9 +13,10 @@ func ActionHandle() {
 	wMap := context.GlobalContext.GetWorldMap()
 	reg := context.GlobalContext.GetActionRegister()
 	reader := context.GlobalContext.GetReader()
-	cli.SetPrompt("action")
 
 	for {
+		cli.SetPrompt("action")
+
 		if reader.IsInputEqual("what") {
 			fmt.Println(cli.BuildResponse(
 				wMap.GetLocation(curr).GetAvailableActions(),
@@ -42,6 +43,8 @@ func actionFactory(action component.Action) {
 	reward := action.GetReward()
 
 	for {
+		cli.SetPrompt("action - " + action.GetName())
+
 		target := action.NextWord()
 		fmt.Println("Type '" + target + "'")
 
@@ -51,6 +54,9 @@ func actionFactory(action component.Action) {
 		} else if reader.IsInputEqual(target) {
 			inventory.AddItem(reward)
 			fmt.Println(" +1 " + reward)
+
+		} else {
+			fmt.Println(" " + reader.GetInput() + " different from " + target)
 		}
 	}
 }
