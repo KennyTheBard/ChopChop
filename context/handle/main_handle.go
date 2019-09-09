@@ -8,9 +8,10 @@ import (
 func MainHandle() {
 	handleRegister := context.GlobalContext.GetHandleRegister()
 	reader := context.GlobalContext.GetReader()
-	cli.SetPrompt("main")
 
 	for {
+		cli.SetPrompt("main")
+
 		if reader.IsInputEqual("exit") {
 			break
 

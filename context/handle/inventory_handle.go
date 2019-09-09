@@ -11,9 +11,10 @@ import (
 func InventoryHandle() {
 	inv := context.GlobalContext.GetInventory()
 	reader := context.GlobalContext.GetReader()
-	cli.SetPrompt("inventory")
 
 	for {
+		cli.SetPrompt("inventory")
+
 		if reader.IsInputEqual("back") {
 			break
 
@@ -21,6 +22,7 @@ func InventoryHandle() {
 			items := inv.GetAllItems()
 
 			if len(items) > 0 {
+				fmt.Println(items)
 				fmt.Println(cli.BuildResponse(
 					items,
 					"In the inventory are:\n * ",
@@ -32,7 +34,11 @@ func InventoryHandle() {
 
 		} else {
 			item := reader.GetInput()
-			fmt.Println(" " + item + ": " + strconv.Itoa(inv.GetItem(item)))
+			if count := inv.GetItem(item); count > 0 {
+				fmt.Println(" " + item + ": " + strconv.Itoa(count))
+			} else {
+				fmt.Println(" " + item + ": None")
+			}
 		}
 	}
 }
