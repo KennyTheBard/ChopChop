@@ -8,12 +8,13 @@ import (
 )
 
 type GameContext struct {
-	inventory       component.Inventory
-	actionRegister  component.ActionRegister
-	handleRegister  component.HandleRegister
-	worldMap        component.WorldMap
-	reader          *cli.Reader
-	currentLocation string
+	inventory         component.Inventory
+	actionRegister    component.ActionRegister
+	handleRegister    component.HandleRegister
+	blueprintRegister component.BlueprintRegister
+	worldMap          component.WorldMap
+	reader            *cli.Reader
+	currentLocation   string
 }
 
 var GlobalContext GameContext
@@ -21,6 +22,7 @@ var GlobalContext GameContext
 func (context *GameContext) InitContext() {
 	context.inventory = make(component.Inventory)
 	context.actionRegister = make(component.ActionRegister)
+	context.blueprintRegister = make(component.BlueprintRegister)
 	context.worldMap = make(component.WorldMap)
 	context.reader = new(cli.Reader)
 
@@ -41,6 +43,10 @@ func (context GameContext) GetHandleRegister() component.HandleRegister {
 
 func (context *GameContext) SetHandleRegister(register component.HandleRegister) {
 	context.handleRegister = register
+}
+
+func (context GameContext) GetBlueprintRegister() component.BlueprintRegister {
+	return context.blueprintRegister
 }
 
 func (context GameContext) GetWorldMap() component.WorldMap {

@@ -24,7 +24,7 @@ func (action Action) GetName() string {
 	return action.name
 }
 
-func (action Action) SetName(name string) {
+func (action *Action) SetName(name string) {
 	action.name = name
 }
 
@@ -32,7 +32,7 @@ func (action Action) GetReward() string {
 	return action.reward
 }
 
-func (action Action) SetReward(reward string) {
+func (action *Action) SetReward(reward string) {
 	action.reward = reward
 }
 

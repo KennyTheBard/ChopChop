@@ -4,11 +4,17 @@ import "strconv"
 
 type Inventory map[string]int
 
-func (inventory Inventory) AddItem(item string) {
+func (inventory Inventory) AddItems(item string, num int) {
 	if _, ok := inventory[item]; ok {
-		inventory[item]++
+		inventory[item] += num
 	} else {
-		inventory[item] = 1
+		inventory[item] = num
+	}
+}
+
+func (inventory Inventory) TakeItems(item string, num int) {
+	if units, ok := inventory[item]; ok && units >= num {
+		inventory[item] -= num
 	}
 }
 
@@ -23,6 +29,11 @@ func (inventory Inventory) GetItem(item string) int {
 func (inventory Inventory) HasItem(item string) bool {
 	units, ok := inventory[item]
 	return ok && units > 0
+}
+
+func (inventory Inventory) HasItemAtLeast(item string, min int) bool {
+	units, ok := inventory[item]
+	return ok && units >= min
 }
 
 func (inventory Inventory) GetAllItems() []string {

@@ -52,7 +52,7 @@ func actionFactory(action component.Action) {
 			break
 
 		} else if reader.IsInputEqual(target) {
-			inventory.AddItem(reward)
+			inventory.AddItems(reward, 1)
 			fmt.Println(" +1 " + reward)
 
 		} else {
