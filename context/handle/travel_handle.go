@@ -15,7 +15,7 @@ func TravelHandle() {
 	for {
 		cli.SetPrompt("travel - " + curr)
 
-		if reader.IsInputEqual("where") {
+		if reader.IsInputEqual("help") {
 			fmt.Println(cli.BuildResponse(
 				wMap.GetLocation(curr).GetAdjacentLocations(),
 				"Close locations are:\n * ",

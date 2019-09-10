@@ -15,7 +15,7 @@ func WorkbenchHandle() {
 	for {
 		cli.SetPrompt("workbench")
 
-		if reader.IsInputEqual("what") {
+		if reader.IsInputEqual("help") {
 			fmt.Println(cli.BuildResponse(
 				reg.GetAllBlueprints(),
 				"Available blueprints are:\n * ",

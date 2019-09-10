@@ -18,7 +18,7 @@ func InventoryHandle() {
 		if reader.IsInputEqual("back") {
 			break
 
-		} else if reader.IsInputEqual("all") {
+		} else if reader.IsInputEqual("help") {
 			items := inv.GetAllItems()
 
 			if len(items) > 0 {
