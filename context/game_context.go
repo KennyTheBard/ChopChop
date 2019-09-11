@@ -23,6 +23,7 @@ var GlobalContext GameContext
 func (context *GameContext) InitContext() {
 	context.inventory = make(component.Inventory)
 	context.actionRegister = make(component.ActionRegister)
+	context.handleRegister = make(component.HandleRegister)
 	context.itemRegister = make(component.ItemRegister)
 	context.blueprintRegister = make(component.BlueprintRegister)
 	context.worldMap = make(component.WorldMap)
@@ -45,10 +46,6 @@ func (context GameContext) GetHandleRegister() component.HandleRegister {
 
 func (context GameContext) GetItemRegister() component.ItemRegister {
 	return context.itemRegister
-}
-
-func (context *GameContext) SetHandleRegister(register component.HandleRegister) {
-	context.handleRegister = register
 }
 
 func (context GameContext) GetBlueprintRegister() component.BlueprintRegister {

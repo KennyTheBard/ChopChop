@@ -32,13 +32,11 @@ func main() {
 	bpRegister.AddBlueprint(component.NewBlueprint("pickaxe", []string{"wood", "ingot"}, []int{2, 3}))
 	bpRegister.AddBlueprint(component.NewBlueprint("spear", []string{"wood", "ingot"}, []int{3, 1}))
 
-	handleRegister.Init("help")
 	handleRegister.AddHandle("go", handle.TravelHandle)
 	handleRegister.AddHandle("do", handle.ActionHandle)
 	handleRegister.AddHandle("inv", handle.InventoryHandle)
 	handleRegister.AddHandle("craft", handle.CraftHandle)
 	handleRegister.AddHandle("help", handle.HelpHandle)
-	context.GlobalContext.SetHandleRegister(handleRegister)
 
 	worldMap.AddLocation(component.NewLocation("forrest", []string{"cave", "river"}, []string{"chop", "hunt"}))
 	worldMap.AddLocation(component.NewLocation("river", []string{"forrest"}, []string{"fish"}))
@@ -46,6 +44,7 @@ func main() {
 
 	context.GlobalContext.SetCurrentLocation("forrest")
 
+	// for testing purposes
 	context.GlobalContext.GetInventory().AddItems("wood", 10)
 	context.GlobalContext.GetInventory().AddItems("ore", 10)
 	context.GlobalContext.GetInventory().AddItems("ingot", 10)

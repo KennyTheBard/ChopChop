@@ -2,29 +2,25 @@ package component
 
 type Handle func()
 
-type HandleRegister struct {
-	register map[string]Handle
-	fallback string
-}
-
-func (hRegister *HandleRegister) Init(fallbackHandleName string) {
-	hRegister.register = make(map[string]Handle)
-	hRegister.fallback = fallbackHandleName
-}
+type HandleRegister map[string]Handle
 
 func (hRegister HandleRegister) GetHandle(handle string) Handle {
-	if handle, ok := hRegister.register[handle]; ok {
-		return handle
-	} else {
-		return hRegister.register[hRegister.fallback]
-	}
+	return hRegister[handle]
 }
 
 func (hRegister HandleRegister) HasHandle(handle string) bool {
-	_, ok := hRegister.register[handle]
+	_, ok := hRegister[handle]
 	return ok
 }
 
 func (hRegister HandleRegister) AddHandle(handleName string, handle Handle) {
-	hRegister.register[handleName] = handle
+	hRegister[handleName] = handle
+}
+
+func (hRegister HandleRegister) MapKeys() []string {
+	keys := make([]string, 0, len(hRegister))
+	for k := range hRegister {
+		keys = append(keys, k)
+	}
+	return keys
 }
