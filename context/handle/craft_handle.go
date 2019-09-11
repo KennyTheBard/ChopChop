@@ -49,7 +49,7 @@ func craftItem(bp component.Blueprint) bool {
 
 	for item, cost := range bp.GetAllCosts() {
 		inventory.TakeItems(item, cost)
-		inventory.AddItems(item, 1)
 	}
+	inventory.AddItems(bp.GetItem(), 1)
 	return true
 }

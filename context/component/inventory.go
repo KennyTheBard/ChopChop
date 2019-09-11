@@ -1,6 +1,8 @@
 package component
 
-import "strconv"
+import (
+	"strconv"
+)
 
 type Inventory map[string]int
 
@@ -15,6 +17,9 @@ func (inventory Inventory) AddItems(item string, num int) {
 func (inventory Inventory) TakeItems(item string, num int) {
 	if units, ok := inventory[item]; ok && units >= num {
 		inventory[item] -= num
+	}
+	if inventory[item] == 0 {
+		delete(inventory, item)
 	}
 }
 
