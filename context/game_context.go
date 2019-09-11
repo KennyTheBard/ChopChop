@@ -11,6 +11,7 @@ type GameContext struct {
 	inventory         component.Inventory
 	actionRegister    component.ActionRegister
 	handleRegister    component.HandleRegister
+	itemRegister      component.ItemRegister
 	blueprintRegister component.BlueprintRegister
 	worldMap          component.WorldMap
 	reader            *cli.Reader
@@ -22,6 +23,7 @@ var GlobalContext GameContext
 func (context *GameContext) InitContext() {
 	context.inventory = make(component.Inventory)
 	context.actionRegister = make(component.ActionRegister)
+	context.itemRegister = make(component.ItemRegister)
 	context.blueprintRegister = make(component.BlueprintRegister)
 	context.worldMap = make(component.WorldMap)
 	context.reader = new(cli.Reader)
@@ -39,6 +41,10 @@ func (context GameContext) GetActionRegister() component.ActionRegister {
 
 func (context GameContext) GetHandleRegister() component.HandleRegister {
 	return context.handleRegister
+}
+
+func (context GameContext) GetItemRegister() component.ItemRegister {
+	return context.itemRegister
 }
 
 func (context *GameContext) SetHandleRegister(register component.HandleRegister) {

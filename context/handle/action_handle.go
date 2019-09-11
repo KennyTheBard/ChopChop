@@ -17,7 +17,7 @@ func ActionHandle() {
 	for {
 		cli.SetPrompt("action")
 
-		if reader.IsInputEqual("?") {
+		if reader.IsInputEqual("help") {
 			fmt.Println(cli.BuildResponse(
 				wMap.GetLocation(curr).GetAvailableActions(),
 				"Available actions are:\n * ",
