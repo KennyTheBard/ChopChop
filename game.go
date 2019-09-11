@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"math/rand"
+	"time"
 
 	context "./context"
 	component "./context/component"
@@ -16,16 +18,18 @@ func main() {
 	fmt.Println("    the situation you are in and what can be done. This being said, have fun!")
 	fmt.Println(" ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ")
 
+	rand.Seed(time.Now().UTC().UnixNano())
+
 	context.GlobalContext.InitContext()
 	actionRegister := context.GlobalContext.GetActionRegister()
 	handleRegister := context.GlobalContext.GetHandleRegister()
 	bpRegister := context.GlobalContext.GetBlueprintRegister()
 	worldMap := context.GlobalContext.GetWorldMap()
 
-	actionRegister.AddAction(component.NewAction("chop", "wood", "axe", []string{"swing", "axe", "saw"}))
-	actionRegister.AddAction(component.NewAction("hunt", "meat", "spear", []string{"track", "stalk", "shoot"}))
-	actionRegister.AddAction(component.NewAction("fish", "fish", "", []string{"bait", "throw", "pull"}))
-	actionRegister.AddAction(component.NewAction("mine", "ore", "pickaxe", []string{"break", "drill", "dig", "polish"}))
+	actionRegister.AddAction(component.NewAction("chop", "wood", 0.6, "axe", []string{"swing", "axe", "saw"}))
+	actionRegister.AddAction(component.NewAction("hunt", "meat", 0.4, "spear", []string{"track", "stalk", "shoot"}))
+	actionRegister.AddAction(component.NewAction("fish", "fish", 0.25, "", []string{"bait", "throw", "pull"}))
+	actionRegister.AddAction(component.NewAction("mine", "ore", 0.15, "pickaxe", []string{"break", "drill", "dig", "polish"}))
 
 	bpRegister.AddBlueprint(component.NewBlueprint("ingot", []string{"ore"}, []int{3}))
 	bpRegister.AddBlueprint(component.NewBlueprint("axe", []string{"wood", "ingot"}, []int{2, 2}))

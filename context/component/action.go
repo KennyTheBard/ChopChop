@@ -5,16 +5,21 @@ import (
 )
 
 type Action struct {
-	name, reward, tool string
-	dictionary         []string
+	name, reward string
+	chance       float32
+	tool         string
+	success      bool
+	dictionary   []string
 }
 
-func NewAction(name, reward, tool string, dictionary []string) Action {
+func NewAction(name, reward string, chance float32, tool string, dictionary []string) Action {
 	var action Action
 
 	action.name = name
 	action.reward = reward
+	action.chance = chance
 	action.tool = tool
+	action.success = false
 	action.dictionary = dictionary
 
 	return action
@@ -44,7 +49,16 @@ func (action *Action) SetTool(tool string) {
 	action.tool = tool
 }
 
-func (action Action) NextWord() string {
+func (action Action) IsSuccessful() bool {
+	return action.success
+}
+
+func (action *Action) NextWord() string {
+	if rand.Float32() < action.chance {
+		action.success = true
+	} else {
+		action.success = false
+	}
 	target := action.dictionary[rand.Intn(len(action.dictionary))]
 	return target
 }

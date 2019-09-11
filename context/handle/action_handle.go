@@ -60,8 +60,10 @@ func actionFactory(action component.Action) {
 			break
 
 		} else if reader.IsInputEqual(target) {
-			inventory.AddItems(reward, rewardQuantity)
-			fmt.Println(" +" + strconv.Itoa(rewardQuantity) + " " + reward)
+			if action.IsSuccessful() {
+				inventory.AddItems(reward, rewardQuantity)
+				fmt.Println(" +" + strconv.Itoa(rewardQuantity) + " " + reward)
+			}
 
 		} else {
 			fmt.Println(" " + reader.GetInput() + " different from " + target)
