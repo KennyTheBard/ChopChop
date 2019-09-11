@@ -5,16 +5,16 @@ import (
 )
 
 type Action struct {
-	name       string
-	reward     string
-	dictionary []string
+	name, reward, tool string
+	dictionary         []string
 }
 
-func NewAction(name, reward string, dictionary []string) Action {
+func NewAction(name, reward, tool string, dictionary []string) Action {
 	var action Action
 
 	action.name = name
 	action.reward = reward
+	action.tool = tool
 	action.dictionary = dictionary
 
 	return action
@@ -34,6 +34,14 @@ func (action Action) GetReward() string {
 
 func (action *Action) SetReward(reward string) {
 	action.reward = reward
+}
+
+func (action Action) GetTool() string {
+	return action.tool
+}
+
+func (action *Action) SetTool(tool string) {
+	action.tool = tool
 }
 
 func (action Action) NextWord() string {

@@ -14,10 +14,10 @@ func main() {
 	bpRegister := context.GlobalContext.GetBlueprintRegister()
 	worldMap := context.GlobalContext.GetWorldMap()
 
-	actionRegister.AddAction(component.NewAction("chop", "wood", []string{"swing", "axe", "saw"}))
-	actionRegister.AddAction(component.NewAction("hunt", "meat", []string{"track", "stalk", "shoot"}))
-	actionRegister.AddAction(component.NewAction("fish", "fish", []string{"bait", "throw", "pull"}))
-	actionRegister.AddAction(component.NewAction("mine", "ore", []string{"break", "drill", "dig", "polish"}))
+	actionRegister.AddAction(component.NewAction("chop", "wood", "axe", []string{"swing", "axe", "saw"}))
+	actionRegister.AddAction(component.NewAction("hunt", "meat", "spear", []string{"track", "stalk", "shoot"}))
+	actionRegister.AddAction(component.NewAction("fish", "fish", "", []string{"bait", "throw", "pull"}))
+	actionRegister.AddAction(component.NewAction("mine", "ore", "pickaxe", []string{"break", "drill", "dig", "polish"}))
 
 	bpRegister.AddBlueprint(component.NewBlueprint("ingot", []string{"ore"}, []int{3}))
 	bpRegister.AddBlueprint(component.NewBlueprint("axe", []string{"wood", "ingot"}, []int{2, 2}))
@@ -37,6 +37,10 @@ func main() {
 	worldMap.AddLocation(component.NewLocation("cave", []string{"forrest"}, []string{"mine"}))
 
 	context.GlobalContext.SetCurrentLocation("forrest")
+
+	context.GlobalContext.GetInventory().AddItems("wood", 10)
+	context.GlobalContext.GetInventory().AddItems("ore", 10)
+	context.GlobalContext.GetInventory().AddItems("ingot", 10)
 
 	handle.MainHandle()
 }

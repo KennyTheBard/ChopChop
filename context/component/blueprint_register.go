@@ -1,5 +1,7 @@
 package component
 
+import "strconv"
+
 type BlueprintRegister map[string]Blueprint
 
 func (register BlueprintRegister) GetBlueprint(bpName string) Blueprint {
@@ -17,8 +19,12 @@ func (register BlueprintRegister) AddBlueprint(bp Blueprint) {
 
 func (register BlueprintRegister) GetAllBlueprints() []string {
 	bps := make([]string, 0, len(register))
-	for bp := range register {
-		bps = append(bps, bp)
+	for _, bp := range register {
+		aux := bp.GetItem() + " ="
+		for item, cost := range bp.GetAllCosts() {
+			aux += " (" + strconv.Itoa(cost) + " " + item + ")"
+		}
+		bps = append(bps, aux)
 	}
 	return bps
 }

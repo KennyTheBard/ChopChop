@@ -18,11 +18,10 @@ func InventoryHandle() {
 		if reader.IsInputEqual("back") {
 			break
 
-		} else if reader.IsInputEqual("help") {
+		} else if reader.IsInputEqual("all") {
 			items := inv.GetAllItems()
 
 			if len(items) > 0 {
-				fmt.Println(items)
 				fmt.Println(cli.BuildResponse(
 					items,
 					"In the inventory are:\n * ",

@@ -27,8 +27,7 @@ func (inventory Inventory) GetItem(item string) int {
 }
 
 func (inventory Inventory) HasItem(item string) bool {
-	units, ok := inventory[item]
-	return ok && units > 0
+	return inventory.HasItemAtLeast(item, 1)
 }
 
 func (inventory Inventory) HasItemAtLeast(item string, min int) bool {

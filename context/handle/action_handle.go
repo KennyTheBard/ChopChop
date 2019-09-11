@@ -2,6 +2,7 @@ package handle
 
 import (
 	"fmt"
+	"strconv"
 
 	context ".."
 	cli "../../cli"
@@ -42,6 +43,13 @@ func actionFactory(action component.Action) {
 	inventory := context.GlobalContext.GetInventory()
 	reward := action.GetReward()
 
+	rewardQuantity := 1
+
+	if inventory.HasItem(action.GetTool()) {
+		rewardQuantity = 2
+		inventory.TakeItems(action.GetTool(), 1)
+	}
+
 	for {
 		cli.SetPrompt("action - " + action.GetName())
 
@@ -52,8 +60,8 @@ func actionFactory(action component.Action) {
 			break
 
 		} else if reader.IsInputEqual(target) {
-			inventory.AddItems(reward, 1)
-			fmt.Println(" +1 " + reward)
+			inventory.AddItems(reward, rewardQuantity)
+			fmt.Println(" +" + strconv.Itoa(rewardQuantity) + " " + reward)
 
 		} else {
 			fmt.Println(" " + reader.GetInput() + " different from " + target)
