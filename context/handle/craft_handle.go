@@ -8,12 +8,12 @@ import (
 	component "../component"
 )
 
-func WorkbenchHandle() {
+func CraftHandle() {
 	reg := context.GlobalContext.GetBlueprintRegister()
 	reader := context.GlobalContext.GetReader()
 
 	for {
-		cli.SetPrompt("workbench")
+		cli.SetPrompt("craft")
 
 		if reader.IsInputEqual("help") {
 			fmt.Println(cli.BuildResponse(

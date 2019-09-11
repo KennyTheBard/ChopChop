@@ -28,7 +28,7 @@ func main() {
 	handleRegister.AddHandle("go", handle.TravelHandle)
 	handleRegister.AddHandle("do", handle.ActionHandle)
 	handleRegister.AddHandle("inv", handle.InventoryHandle)
-	handleRegister.AddHandle("craft", handle.WorkbenchHandle)
+	handleRegister.AddHandle("craft", handle.CraftHandle)
 	handleRegister.AddHandle("help", handle.HelpHandle)
 	context.GlobalContext.SetHandleRegister(handleRegister)
 
