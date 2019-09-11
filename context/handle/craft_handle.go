@@ -33,7 +33,7 @@ func CraftHandle() {
 			}
 
 		} else {
-			fmt.Println("ERROR [" + arg + "]: This action cannot be done here!")
+			fmt.Println("Blueprint for " + arg + " is currently unknown to you!")
 		}
 	}
 }

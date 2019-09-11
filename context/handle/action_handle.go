@@ -33,7 +33,7 @@ func ActionHandle() {
 			actionFactory(reg.GetAction(arg))
 
 		} else {
-			fmt.Println("ERROR [" + arg + "]: This action cannot be done here!")
+			fmt.Println(arg + " cannot be done here!")
 		}
 	}
 }
