@@ -1,12 +1,20 @@
 package main
 
 import (
+	"fmt"
+
 	context "./context"
 	component "./context/component"
 	handle "./context/handle"
 )
 
 func main() {
+	fmt.Println(" ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ")
+	fmt.Println("  Welcome to Woodshack, a text-based game about making the best of what you have!")
+	fmt.Println("    In order to learn anything about the current envirment, type 'help'")
+	fmt.Println("  At any point there should be a message designed to help you to better understand")
+	fmt.Println("    the situation you are in and what can be done. This being said, have fun!")
+	fmt.Println(" ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ")
 
 	context.GlobalContext.InitContext()
 	actionRegister := context.GlobalContext.GetActionRegister()
