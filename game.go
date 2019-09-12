@@ -8,6 +8,7 @@ import (
 	context "./context"
 	component "./context/component"
 	handle "./context/handle"
+	npc "./context/npc"
 )
 
 func main() {
@@ -53,6 +54,8 @@ func main() {
 	context.GlobalContext.SetCurrentLocation("forrest")
 
 	// for testing purposes
+	context.GlobalContext.SetMerchant(npc.NewMerchant("sword", 20))
+
 	context.GlobalContext.GetInventory().AddItems("wood", 10)
 	context.GlobalContext.GetInventory().AddItems("ore", 10)
 	context.GlobalContext.GetInventory().AddItems("ingot", 10)

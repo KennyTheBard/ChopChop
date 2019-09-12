@@ -2,6 +2,7 @@ package handle
 
 import (
 	"fmt"
+	"math"
 	"strconv"
 
 	context ".."
@@ -12,6 +13,7 @@ func TradeHandle() {
 	inventory := context.GlobalContext.GetInventory()
 	reg := context.GlobalContext.GetItemRegister()
 	reader := context.GlobalContext.GetReader()
+	merchant := context.GlobalContext.GetMerchant()
 
 	for {
 		SetPrompt("trade")
@@ -21,13 +23,11 @@ func TradeHandle() {
 
 			i := 0
 			for item := range inventory {
-				items[i] = item + " -> "
 				if reg.HasItem(item) {
-					items[i] += strconv.Itoa(reg.GetItem(item).GetValue())
+					items[i] = strconv.Itoa(int(math.Ceil(float64(merchant.GetPrice())/float64(reg.GetItem(item).GetValue())))) + "x " + item + " for 1 " + merchant.GetItem()
 				} else {
-					items[i] += "0"
+					items[i] = "Can't be bought with " + item
 				}
-
 				i++
 			}
 

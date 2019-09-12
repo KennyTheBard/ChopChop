@@ -5,6 +5,7 @@ import (
 
 	cli "../cli"
 	component "./component"
+	npc "./npc"
 )
 
 type GameContext struct {
@@ -15,6 +16,7 @@ type GameContext struct {
 	blueprintRegister component.BlueprintRegister
 	worldMap          component.WorldMap
 	reader            *cli.Reader
+	merchant          npc.Merchant
 	currentLocation   string
 }
 
@@ -58,6 +60,14 @@ func (context GameContext) GetWorldMap() component.WorldMap {
 
 func (context GameContext) GetReader() *cli.Reader {
 	return context.reader
+}
+
+func (context GameContext) GetMerchant() npc.Merchant {
+	return context.merchant
+}
+
+func (context *GameContext) SetMerchant(merchant npc.Merchant) {
+	context.merchant = merchant
 }
 
 func (context GameContext) GetCurrentLocation() string {
