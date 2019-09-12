@@ -25,7 +25,13 @@ func MainHandle() {
 				""))
 
 		} else {
-			handleRegister.GetHandle(reader.GetInput())()
+			handle := handleRegister.GetHandle(reader.GetInput())
+
+			if handle != nil {
+				handle()
+			} else {
+				fmt.Println("No command known with this name!")
+			}
 		}
 	}
 }
