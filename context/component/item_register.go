@@ -11,6 +11,6 @@ func (reg ItemRegister) HasItem(name string) bool {
 	return ok
 }
 
-func (reg ItemRegister) SetItem(item Item) {
+func (reg ItemRegister) AddItem(item Item) {
 	reg[item.GetName()] = item
 }

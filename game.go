@@ -23,6 +23,7 @@ func main() {
 	context.GlobalContext.InitContext()
 	actionRegister := context.GlobalContext.GetActionRegister()
 	handleRegister := context.GlobalContext.GetHandleRegister()
+	itemRegister := context.GlobalContext.GetItemRegister()
 	bpRegister := context.GlobalContext.GetBlueprintRegister()
 	worldMap := context.GlobalContext.GetWorldMap()
 
@@ -41,6 +42,9 @@ func main() {
 	handleRegister.AddHandle("inv", handle.InventoryHandle)
 	handleRegister.AddHandle("craft", handle.CraftHandle)
 	handleRegister.AddHandle("help", handle.HelpHandle)
+	handleRegister.AddHandle("trade", handle.TradeHandle)
+
+	itemRegister.AddItem(component.NewItem("ingot", 5))
 
 	worldMap.AddLocation(component.NewLocation("forrest", []string{"cave", "river"}, []string{"chop", "hunt"}))
 	worldMap.AddLocation(component.NewLocation("river", []string{"forrest"}, []string{"fish"}))
