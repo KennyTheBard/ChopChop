@@ -17,12 +17,17 @@ func (register BlueprintRegister) AddBlueprint(bp Blueprint) {
 	register[bp.GetItem()] = bp
 }
 
-func (register BlueprintRegister) GetAllBlueprints() []string {
+func (register BlueprintRegister) GetAllRecipes() []string {
 	bps := make([]string, 0, len(register))
 	for _, bp := range register {
 		aux := bp.GetItem() + " ="
+		length := len(bp.GetAllCosts())
 		for item, cost := range bp.GetAllCosts() {
-			aux += " (" + strconv.Itoa(cost) + " " + item + ")"
+			aux += " " + strconv.Itoa(cost) + "x " + item
+			if length > 1 {
+				aux += " +"
+			}
+			length--
 		}
 		bps = append(bps, aux)
 	}

@@ -17,7 +17,7 @@ func CraftHandle() {
 
 		if reader.IsInputEqual("help") {
 			fmt.Println(cli.BuildResponse(
-				reg.GetAllBlueprints(),
+				reg.GetAllRecipes(),
 				"Available blueprints are:\n * ",
 				"\n * ",
 				""))
