@@ -12,7 +12,7 @@ func MainHandle() {
 	reader := context.GlobalContext.GetReader()
 
 	for {
-		cli.SetPrompt("main")
+		SetPrompt("main")
 
 		if reader.IsInputEqual("exit") {
 			break

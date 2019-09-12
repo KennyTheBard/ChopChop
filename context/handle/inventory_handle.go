@@ -13,7 +13,7 @@ func InventoryHandle() {
 	reader := context.GlobalContext.GetReader()
 
 	for {
-		cli.SetPrompt("inventory")
+		SetPrompt("inventory")
 
 		if reader.IsInputEqual("back") {
 			break

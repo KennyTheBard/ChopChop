@@ -16,7 +16,7 @@ func ActionHandle() {
 	reader := context.GlobalContext.GetReader()
 
 	for {
-		cli.SetPrompt("action")
+		SetPrompt("action")
 
 		if reader.IsInputEqual("help") {
 			fmt.Println(cli.BuildResponse(
@@ -51,7 +51,7 @@ func actionFactory(action component.Action) {
 	}
 
 	for {
-		cli.SetPrompt("action - " + action.GetName())
+		SetPrompt("action - " + action.GetName())
 
 		target := action.NextWord()
 		fmt.Println("Type '" + target + "'")

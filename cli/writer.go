@@ -5,14 +5,15 @@ import (
 	"strings"
 )
 
-var prompt string
+var prompt, location string
 
 func Prompt() {
-	fmt.Print(" [" + prompt + "] >> ")
+	fmt.Print(" [" + prompt + " - " + location + "] >> ")
 }
 
-func SetPrompt(newPrompt string) {
+func SetPrompt(newPrompt, newLocation string) {
 	prompt = strings.ToUpper(newPrompt)
+	location = strings.ToUpper(newLocation)
 }
 
 func BuildResponse(args []string, pre, separator, post string) string {

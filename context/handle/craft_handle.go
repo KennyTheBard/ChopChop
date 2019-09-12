@@ -13,7 +13,7 @@ func CraftHandle() {
 	reader := context.GlobalContext.GetReader()
 
 	for {
-		cli.SetPrompt("craft")
+		SetPrompt("craft")
 
 		if reader.IsInputEqual("help") {
 			fmt.Println(cli.BuildResponse(

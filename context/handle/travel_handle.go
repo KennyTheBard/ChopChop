@@ -13,7 +13,7 @@ func TravelHandle() {
 	reader := context.GlobalContext.GetReader()
 
 	for {
-		cli.SetPrompt("travel - " + curr)
+		SetPrompt("travel")
 
 		if reader.IsInputEqual("help") {
 			fmt.Println(cli.BuildResponse(
