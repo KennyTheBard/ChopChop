@@ -54,7 +54,7 @@ func main() {
 	context.GlobalContext.SetCurrentLocation("forrest")
 
 	// for testing purposes
-	context.GlobalContext.SetMerchant(npc.NewMerchant("sword", 20))
+	context.GlobalContext.SetMerchant(npc.NewMerchant("sword", map[string]int{"ingot": 5, "meat": 30}))
 
 	context.GlobalContext.GetInventory().AddItems("wood", 10)
 	context.GlobalContext.GetInventory().AddItems("ore", 10)

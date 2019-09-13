@@ -2,16 +2,14 @@ package handle
 
 import (
 	"fmt"
-	"math"
 	"strconv"
 
 	context ".."
 	cli "../../cli"
+	npc "../npc"
 )
 
 func TradeHandle() {
-	inventory := context.GlobalContext.GetInventory()
-	reg := context.GlobalContext.GetItemRegister()
 	reader := context.GlobalContext.GetReader()
 	merchant := context.GlobalContext.GetMerchant()
 
@@ -19,29 +17,44 @@ func TradeHandle() {
 		SetPrompt("trade")
 
 		if reader.IsInputEqual("help") {
-			items := make([]string, len(inventory))
+			items := make([]string, len(merchant.GetAllOffers()))
 
 			i := 0
-			for item := range inventory {
-				if reg.HasItem(item) {
-					items[i] = strconv.Itoa(int(math.Ceil(float64(merchant.GetPrice())/float64(reg.GetItem(item).GetValue())))) + "x " + item + " for 1 " + merchant.GetItem()
-				} else {
-					items[i] = "Can't be bought with " + item
-				}
+			for item, offer := range merchant.GetAllOffers() {
+				items[i] = strconv.Itoa(offer) + " x " + item + " for 1 " + merchant.GetItem()
 				i++
 			}
 
 			fmt.Println(cli.BuildResponse(
 				items,
-				"Trade prices ares:\n * ",
+				"Trade prices are:\n * ",
 				"\n * ",
 				""))
 
 		} else if reader.IsInputEqual("back") {
 			break
 
+		} else if arg := reader.GetInput(); merchant.HasOffer(arg) {
+			if tradeItem(merchant, arg) {
+				fmt.Println("You traded " + strconv.Itoa(merchant.GetOffer(arg)) + " x " + arg + " for 1 " + merchant.GetItem())
+			} else {
+				fmt.Println("You don't have enough " + arg + " to trade!")
+			}
+
 		} else {
-			fmt.Println("There is no " + reader.GetInput() + " in the vicinity!")
+			fmt.Println("This merchant does not trade for " + arg + "!")
 		}
 	}
+}
+
+func tradeItem(merchant npc.Merchant, item string) bool {
+	inventory := context.GlobalContext.GetInventory()
+
+	if !inventory.HasItemAtLeast(item, merchant.GetOffer(item)) {
+		return false
+	}
+
+	inventory.TakeItems(item, merchant.GetOffer(item))
+	inventory.AddItems(merchant.GetItem(), 1)
+	return true
 }
